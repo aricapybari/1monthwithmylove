@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Love Website</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="m-0 p-0">
+    <div id="root"></div>
+
+    <!-- React and ReactDOM (CDN) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Your LoveWebsite component -->
+    <script type="text/babel">
+      const { useState, useEffect, useRef } = React;
+
+      function LoveWebsite() {
+        const CAT_BACKGROUND = "/14f7b22e-2fa7-47c5-90c9-193d67cfa73a.png";
+        const [step, setStep] = useState(0);
+        const [dots, setDots] = useState("");
+        const ewNoRef = useRef(null);
+
+        const moveEwButton = () => {
+          if (!ewNoRef.current) return;
+          const x = Math.round((Math.random() - 0.5) * 360);
+          const y = Math.round((Math.random() - 0.5) * 160);
+          ewNoRef.current.style.transform = `translate(${x}px, ${y}px)`;
+        };
+
+        const goToLoading = () => {
+          setDots("");
+          setStep(2);
+        };
+
+        useEffect(() => {
+          if (step === 2) {
+            let count = 0;
+            const interval = setInterval(() => {
+              count++;
+              setDots(".".repeat(count));
+              if (count === 5) {
+                clearInterval(interval);
+                setTimeout(() => setStep(3), 500);
+              }
+            }, 1000);
+            return () => clearInterval(interval);
+          }
+        }, [step]);
+
+        return (
+          <div
+            className="flex items-center justify-center h-screen w-screen text-center relative overflow-hidden"
+            style={{
+              backgroundImage: `url(${CAT_BACKGROUND})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              fontFamily: '"Times New Roman", Times, serif',
+            }}
+          >
+            {/* Corner roses */}
+            <div className="absolute top-4 left-4 text-5xl" style={{ textShadow: "0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff" }}>🌹</div>
+            <div className="absolute top-4 right-4 text-5xl" style={{ textShadow: "0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff" }}>🌹</div>
+            <div className="absolute bottom-4 left-4 text-5xl" style={{ textShadow: "0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff" }}>🌹</div>
+            <div className="absolute bottom-4 right-4 text-5xl" style={{ textShadow: "0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff" }}>🌹</div>
+
+            {/* Main panel */}
+            <div className="z-10 p-6">
+              {/* Intro */}
+              {step === 0 && (
+                <div className="animate-fadeDown">
+                  <h1 className="text-6xl mb-6 text-pink-400" style={{ textShadow: "0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff" }}>happy 1 month shem</h1>
+                  <div className="flex flex-col items-center justify-center relative gap-6">
+                    <button
+                      onClick={() => setStep(1)}
+                      className="bg-pink-500 text-white text-2xl px-6 py-3 rounded-2xl shadow-lg hover:scale-105 transition"
+                      style={{ textShadow: "0 0 10px #ff00ff, 0 0 20px #ff00ff" }}
+                    >
+                      happy one month ari
+                    </button>
+
+                    <button
+                      ref={ewNoRef}
+                      onMouseEnter={moveEwButton}
+                      className="bg-gray-600 text-white text-2xl px-6 py-3 rounded-2xl shadow-lg absolute top-24"
+                      style={{ textShadow: "0 0 10px #ff00ff, 0 0 20px #ff00ff" }}
+                    >
+                      ew no
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Love message */}
+              {step === 1 && (
+                <div className="animate-fadeDown max-w-4xl">
+                  <p className="text-2xl mx-auto mb-8 leading-relaxed text-pink-100 bg-black/30 p-6 rounded" style={{ textShadow: "0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff" }}>
+                    Hi baby i want to say this to u in person but since i am not there ill try
+                    to show my love through words even if nothing can ever encapsulate how
+                    much i love you. The love of my life you gave me every reason to be a
+                    better person and to love as hard as i can. I never met someone that made
+                    sure i was genuinly okay, that put my needs infront of theirs, and love
+                    me so much its genuinly impossible to imagine anything better. You are
+                    the most attractive person ever, and its not just because of your face,
+                    but the person u are. You make me feel important and let me be as loving
+                    and annoying as possibe, u let me love you with everything, and u always
+                    make time for me no matter what. I never could imagine that this type of
+                    love exsisted outside of the fairy tials but u look like the most perfect
+                    fantesy, like someone out of my dream. It makes sense that i love you
+                    with everything there isnt a single thing i cant love about you, its like
+                    i am talking to myself, the most loyal loving and caring person ever. i
+                    love you so much now forever and never not.
+                  </p>
+                  <button
+                    onClick={goToLoading}
+                    className="bg-pink-500 text-white text-2xl px-6 py-3 rounded-2xl shadow-lg hover:scale-105 transition"
+                    style={{ textShadow: "0 0 10px #ff00ff, 0 0 20px #ff00ff" }}
+                  >
+                    go on...
+                  </button>
+                </div>
+              )}
+
+              {/* Loading screen */}
+              {step === 2 && (
+                <div className="flex flex-col items-center justify-center animate-fadeDown">
+                  <p
+                    className="text-green-400 text-7xl font-bold"
+                    style={{ fontFamily: "monospace", textShadow: "0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00" }}
+                  >
+                    {dots}
+                  </p>
+                  <p
+                    className="text-green-400 text-2xl mt-4"
+                    style={{ fontFamily: "monospace", textShadow: "0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00" }}
+                  >
+                    loading please wait...
+                  </p>
+                </div>
+              )}
+
+              {/* Final message */}
+              {step === 3 && (
+                <h1 className="animate-fadeDown text-7xl font-bold text-pink-500 max-w-4xl" style={{ textShadow: "0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff" }}>
+                  I LOVE YOU SHEM NOW FOREVER AND NEVER NOT
+                </h1>
+              )}
+            </div>
+
+            {/* Fade animation */}
+            <style>{`
+              @keyframes fadeDown {
+                0% { opacity: 0; transform: translateY(-120px); }
+                100% { opacity: 1; transform: translateY(0); }
+              }
+              .animate-fadeDown {
+                animation: fadeDown 2s ease-out both;
+              }
+            `}</style>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<LoveWebsite />);
+    </script>
+
+    <!-- Babel for JSX support -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </body>
+</html>
